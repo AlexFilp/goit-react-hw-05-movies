@@ -1,10 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import {
-  GENRES_DATA,
-  getGenresFromLocalStorage,
-  getGenresNames,
-} from '../getGenres';
+import { GENRES_DATA, getGenresFromLocalStorage } from '../getGenres';
 import { FilmService } from '../FilmService';
 const filmservice = new FilmService();
 
@@ -28,7 +24,7 @@ export const MovieDetails = () => {
 
   const baseImgUrl = `https://image.tmdb.org/t/p/w300${film.poster_path}`;
 
-  const { title, release_date, popularity, overview, genres } = film;
+  const { title, release_date, popularity, overview } = film;
 
   return (
     <main>
