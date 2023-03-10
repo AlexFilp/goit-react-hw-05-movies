@@ -1,7 +1,8 @@
 import { FilmsListItem } from 'components/FilmsListItem/FilmsListItem';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { FilmService } from '../FilmService';
+import { FilmService } from '../../FilmService';
+import { List, Main, Title } from './Home.styled';
 
 const filmServise = new FilmService();
 
@@ -24,8 +25,9 @@ export const Home = () => {
   };
 
   return (
-    <main>
-      <ul>
+    <Main>
+      <Title>Trending today</Title>
+      <List>
         {films.map(({ id, title }) => {
           return (
             <FilmsListItem
@@ -36,7 +38,7 @@ export const Home = () => {
             />
           );
         })}
-      </ul>
-    </main>
+      </List>
+    </Main>
   );
 };

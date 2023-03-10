@@ -1,8 +1,9 @@
 import { OnSearchFilmListItem } from 'components/OnSearchFilmList/OnSearchFilmListItem';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { useEffect, useState } from 'react';
-import { FilmService } from '../FilmService';
+import { FilmService } from '../../FilmService';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { Main, List } from './Movies.styled';
 
 const filmServise = new FilmService();
 
@@ -11,8 +12,8 @@ export const Movies = () => {
 
   const [films, setFilms] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+
   const movieName = searchParams.get('query') ?? '';
-  console.log(movieName);
 
   const onSubmit = query => {
     const nextParams = query !== '' ? { query } : {};
@@ -38,9 +39,9 @@ export const Movies = () => {
   };
 
   return (
-    <main>
+    <Main>
       <SearchBar onSubmit={onSubmit} />
-      <ul>
+      <List>
         {films.map(({ id, title }) => {
           return (
             <OnSearchFilmListItem
@@ -51,7 +52,7 @@ export const Movies = () => {
             />
           );
         })}
-      </ul>
-    </main>
+      </List>
+    </Main>
   );
 };

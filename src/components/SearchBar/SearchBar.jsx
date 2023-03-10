@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Btn, Form, Input } from './SearchBar.styled';
 
 export const SearchBar = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
@@ -18,8 +19,8 @@ export const SearchBar = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={onHandleSubmit}>
-      <input
+    <Form onSubmit={onHandleSubmit}>
+      <Input
         onChange={onHandleChange}
         name="query"
         value={query}
@@ -27,7 +28,7 @@ export const SearchBar = ({ onSubmit }) => {
         autoComplete="off"
         placeholder="Film name"
       />
-      <button type="submit">Search</button>
-    </form>
+      <Btn type="submit">Search</Btn>
+    </Form>
   );
 };

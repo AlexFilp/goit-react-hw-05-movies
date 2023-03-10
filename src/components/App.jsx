@@ -1,10 +1,11 @@
-import { Home } from '../Pages/Home';
+import { Home } from '../Pages/Home/Home';
 import { MovieDetails } from '../Pages/MovieDetails';
-import { Movies } from '../Pages/Movies';
+import { Movies } from '../Pages/Movies/Movies';
 import { Route, Routes } from 'react-router-dom';
 import { Cast } from 'Pages/Cast';
 import { Reviews } from 'Pages/Reviews';
 import { SharedLayout } from './SharedLayout/SharedLayout';
+import { GlobalStyle } from './GlobalStyle';
 
 export const App = () => {
   return (
@@ -20,6 +21,7 @@ export const App = () => {
           <Route path="*" element={<Home />} />
         </Route>
       </Routes>
+      <GlobalStyle />
     </div>
   );
 };

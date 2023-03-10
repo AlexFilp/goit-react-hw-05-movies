@@ -2,6 +2,8 @@ import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import movieImg from '../image/movie.jpg';
 import { FilmService } from '../FilmService';
+import { BsArrowLeft } from 'react-icons/bs';
+
 const filmservice = new FilmService();
 
 export const MovieDetails = () => {
@@ -28,7 +30,10 @@ export const MovieDetails = () => {
 
   return (
     <main>
-      <Link to={backLinkHref}>Go back</Link>
+      <Link to={backLinkHref}>
+        <BsArrowLeft />
+        Go back
+      </Link>
       <img src={poster_path ? baseImgUrl : movieImg} alt="" width="300" />
       <div>
         <h2>
@@ -37,7 +42,7 @@ export const MovieDetails = () => {
             ? 'No date'
             : release_date.slice(0, 4)}
         </h2>
-        <p>Rating: {Number(vote_average).toFixed(1)}</p>
+        <p>User Score: {Number(vote_average).toFixed(1) * 10}%</p>
         <h3>Overview</h3>
         <p>{overview}</p>
         <h3>Genres</h3>
