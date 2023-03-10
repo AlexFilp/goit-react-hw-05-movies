@@ -1,11 +1,13 @@
 import { FilmsListItem } from 'components/FilmsListItem/FilmsListItem';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FilmService } from '../FilmService';
 
 const filmServise = new FilmService();
 
 export const Home = () => {
   const [films, setFilms] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     filmServise
@@ -25,7 +27,14 @@ export const Home = () => {
     <main>
       <ul>
         {films.map(({ id, title }) => {
-          return <FilmsListItem key={id} id={id} title={title} />;
+          return (
+            <FilmsListItem
+              key={id}
+              id={id}
+              title={title}
+              state={{ from: location }}
+            />
+          );
         })}
       </ul>
     </main>

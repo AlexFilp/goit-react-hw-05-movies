@@ -1,35 +1,35 @@
-import { useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { GENRES_DATA, getGenresFromLocalStorage } from '../getGenres';
+import movieImg from '../image/movie.jpg';
 import { FilmService } from '../FilmService';
 const filmservice = new FilmService();
 
-const genresData = getGenresFromLocalStorage(GENRES_DATA);
-console.log(genresData);
-
 export const MovieDetails = () => {
   const [film, setFilm] = useState({});
-  const { id } = useParams();
+  const { movieId } = useParams();
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/movies';
 
   useEffect(() => {
-    filmservice.fetchFilmById('movieId', id).then(film => {
+    filmservice.fetchFilmById('movieId', movieId).then(film => {
       console.log(film);
       loadFilmInfo(film);
     });
-  }, [id]);
+  }, [movieId]);
 
   const loadFilmInfo = newData => {
     setFilm(newData);
   };
 
-  const baseImgUrl = `https://image.tmdb.org/t/p/w300${film.poster_path}`;
+  const { title, release_date, poster_path, vote_average, overview, genres } =
+    film;
 
-  const { title, release_date, popularity, overview } = film;
+  const baseImgUrl = `https://image.tmdb.org/t/p/w300${poster_path}`;
 
   return (
     <main>
-      <button type="button">Go back</button>
-      <img src={baseImgUrl} alt="" />
+      <Link to={backLinkHref}>Go back</Link>
+      <img src={poster_path ? baseImgUrl : movieImg} alt="" width="300" />
       <div>
         <h2>
           {title}{' '}
@@ -37,12 +37,26 @@ export const MovieDetails = () => {
             ? 'No date'
             : release_date.slice(0, 4)}
         </h2>
-        <p>Popularity: {Number(popularity).toFixed(1)}</p>
+        <p>Rating: {Number(vote_average).toFixed(1)}</p>
         <h3>Overview</h3>
         <p>{overview}</p>
         <h3>Genres</h3>
-        {/* <p>{getGenresNames(genres, genresData)}</p> */}
+        <p>
+          {genres
+            ? `${genres.map(genre => genre.name).join(', ')}.`
+            : 'no genre'}
+        </p>
       </div>
+      <p>Aditional information</p>
+      <ul>
+        <li>
+          <Link to={'cast'}>Cast</Link>
+        </li>
+        <li>
+          <Link to={'reviews'}>Reviews</Link>
+        </li>
+      </ul>
+      <Outlet />
     </main>
   );
 };
