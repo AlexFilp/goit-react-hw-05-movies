@@ -5,7 +5,7 @@ import { FilmService } from '../../FilmService';
 import { Text, ReviewsList, Container } from './Reviews.styled';
 const filmservice = new FilmService();
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const { movieId } = useParams();
 
@@ -36,3 +36,5 @@ export const Reviews = () => {
     </Container>
   );
 };
+
+export default Reviews;

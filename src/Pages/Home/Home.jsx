@@ -6,7 +6,7 @@ import { List, Main, Title } from './Home.styled';
 
 const filmServise = new FilmService();
 
-export const Home = () => {
+const Home = () => {
   const [films, setFilms] = useState([]);
   const location = useLocation();
 
@@ -42,3 +42,5 @@ export const Home = () => {
     </Main>
   );
 };
+
+export default Home;

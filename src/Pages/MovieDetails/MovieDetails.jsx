@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import movieImg from '../../image/movie.jpg';
 import { FilmService } from '../../FilmService';
 import { BsArrowLeft } from 'react-icons/bs';
@@ -20,11 +20,13 @@ import {
   MoreInfoContainer,
   InfoItem,
   InfoLink,
+  Img,
 } from './MovieDetails.styled';
+import { PageLoading } from 'components/PageLoading/PageLoading';
 
 const filmservice = new FilmService();
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [film, setFilm] = useState({});
   const { movieId } = useParams();
   const location = useLocation();
@@ -52,44 +54,51 @@ export const MovieDetails = () => {
         <BsArrowLeft />
         Go back
       </GoBackBtn>
-      <Container>
-        <ImgContainer>
-          <img src={poster_path ? baseImgUrl : movieImg} alt="" width="300" />
-        </ImgContainer>
-        <InfoContainer>
-          <FilmName>
-            {title}{' '}
-            {release_date === '' || !release_date
-              ? 'No date'
-              : `(${release_date.slice(0, 4)})`}
-          </FilmName>
-          <UserScore>
-            User Score: {Number(vote_average).toFixed(1) * 10}%
-          </UserScore>
-          <Overview>Overview</Overview>
-          <Text>{overview === '' ? 'No overview' : overview}</Text>
-          <Genres>Genres</Genres>
-          <GenresList>
-            {genres
-              ? `${genres.map(genre => genre.name).join(', ')}`
-              : 'No genres'}
-          </GenresList>
-        </InfoContainer>
-      </Container>
-      <MoreInfoContainer>
-        {' '}
-        <InfoTitle>Aditional information</InfoTitle>
-        <InfoList>
-          <InfoItem>
-            <InfoLink to={'cast'}>Cast</InfoLink>
-          </InfoItem>
-          <InfoItem>
-            <InfoLink to={'reviews'}>Reviews</InfoLink>
-          </InfoItem>
-        </InfoList>
-      </MoreInfoContainer>
-
-      <Outlet />
+      {title && (
+        <Container>
+          <ImgContainer>
+            <Img src={poster_path ? baseImgUrl : movieImg} alt="" width="300" />
+          </ImgContainer>
+          <InfoContainer>
+            <FilmName>
+              {title}{' '}
+              {release_date === '' || !release_date
+                ? 'No date'
+                : `(${release_date.slice(0, 4)})`}
+            </FilmName>
+            <UserScore>
+              User Score: {Number(vote_average).toFixed(1) * 10}%
+            </UserScore>
+            <Overview>Overview</Overview>
+            <Text>{overview === '' ? 'No overview' : overview}</Text>
+            <Genres>Genres</Genres>
+            <GenresList>
+              {genres
+                ? `${genres.map(genre => genre.name).join(', ')}`
+                : 'No genres'}
+            </GenresList>
+          </InfoContainer>
+        </Container>
+      )}
+      {title && (
+        <MoreInfoContainer>
+          {' '}
+          <InfoTitle>Aditional information</InfoTitle>
+          <InfoList>
+            <InfoItem>
+              <InfoLink to={'cast'}>Cast</InfoLink>
+            </InfoItem>
+            <InfoItem>
+              <InfoLink to={'reviews'}>Reviews</InfoLink>
+            </InfoItem>
+          </InfoList>
+        </MoreInfoContainer>
+      )}
+      <Suspense fallback={<PageLoading />}>
+        <Outlet />
+      </Suspense>
     </Main>
   );
 };
+
+export default MovieDetails;

@@ -7,7 +7,7 @@ import { Main, List } from './Movies.styled';
 
 const filmServise = new FilmService();
 
-export const Movies = () => {
+const Movies = () => {
   const location = useLocation();
 
   const [films, setFilms] = useState([]);
@@ -56,3 +56,5 @@ export const Movies = () => {
     </Main>
   );
 };
+
+export default Movies;

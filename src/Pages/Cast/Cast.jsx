@@ -5,7 +5,7 @@ import { FilmService } from '../../FilmService';
 import { Text, ActorsList } from './Cast.styled';
 const filmservice = new FilmService();
 
-export const Cast = () => {
+const Cast = () => {
   const [actors, setActors] = useState([]);
   const { movieId } = useParams();
 
@@ -41,3 +41,5 @@ export const Cast = () => {
     </>
   );
 };
+
+export default Cast;

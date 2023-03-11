@@ -50,6 +50,10 @@ export const ImgContainer = styled.div`
   overflow: hidden;
 `;
 
+export const Img = styled.img`
+  height: 450px;
+`;
+
 export const InfoContainer = styled.div`
   width: 500px;
   padding: 10px;
