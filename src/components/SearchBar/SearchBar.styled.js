@@ -14,6 +14,7 @@ export const Input = styled.input`
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 4px;
+  border-color: black;
 
   &:focus-within {
     border-color: red;
