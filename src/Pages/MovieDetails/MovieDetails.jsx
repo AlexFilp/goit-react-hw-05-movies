@@ -73,8 +73,8 @@ const MovieDetails = () => {
             <Text>{overview === '' ? 'No overview' : overview}</Text>
             <Genres>Genres</Genres>
             <GenresList>
-              {genres
-                ? `${genres.map(genre => genre.name).join(', ')}`
+              {genres.length !== 0
+                ? `${genres.map(genre => genre.name).join(', ')}.`
                 : 'No genres'}
             </GenresList>
           </InfoContainer>
