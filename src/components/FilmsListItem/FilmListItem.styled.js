@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 export const Item = styled.li`
   margin: 0 auto;
   font-size: 17px;
@@ -20,4 +22,10 @@ export const Item = styled.li`
     transform: scale(1.2);
     color: red;
   }
+`;
+
+export const MovieLink = styled(Link)`
+  display: block;
+  width: inherit;
+  height: inherit;
 `;
