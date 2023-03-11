@@ -28,6 +28,7 @@ const filmservice = new FilmService();
 
 const MovieDetails = () => {
   const [film, setFilm] = useState({});
+  const [loading, setLoading] = useState(true);
   const { movieId } = useParams();
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
@@ -36,6 +37,7 @@ const MovieDetails = () => {
   useEffect(() => {
     filmservice.fetchFilmById('movieId', movieId).then(film => {
       console.log(film);
+      setLoading(false);
       loadFilmInfo(film);
     });
   }, [movieId]);
@@ -55,46 +57,53 @@ const MovieDetails = () => {
         <BsArrowLeft />
         Go back
       </GoBackBtn>
-      {title && (
-        <Container>
-          <ImgContainer>
-            <Img src={poster_path ? baseImgUrl : movieImg} alt="" width="300" />
-          </ImgContainer>
-          <InfoContainer>
-            <FilmName>
-              {title}{' '}
-              {release_date === '' || !release_date
-                ? 'No date'
-                : `(${release_date.slice(0, 4)})`}
-            </FilmName>
-            <UserScore>
-              User Score: {Number(vote_average).toFixed(1) * 10}%
-            </UserScore>
-            <Overview>Overview</Overview>
-            <Text>{overview === '' ? 'No overview' : overview}</Text>
-            <Genres>Genres</Genres>
-            <GenresList>
-              {genres.length !== 0
-                ? `${genres.map(genre => genre.name).join(', ')}.`
-                : 'No genres'}
-            </GenresList>
-          </InfoContainer>
-        </Container>
+      {loading && <PageLoading />}
+
+      {!loading && (
+        <div>
+          <Container>
+            <ImgContainer>
+              <Img
+                src={poster_path ? baseImgUrl : movieImg}
+                alt=""
+                width="300"
+              />
+            </ImgContainer>
+            <InfoContainer>
+              <FilmName>
+                {title}{' '}
+                {release_date === '' || !release_date
+                  ? 'No date'
+                  : `(${release_date.slice(0, 4)})`}
+              </FilmName>
+              <UserScore>
+                User Score: {Number(vote_average).toFixed(1) * 10}%
+              </UserScore>
+              <Overview>Overview</Overview>
+              <Text>{overview === '' ? 'No overview' : overview}</Text>
+              <Genres>Genres</Genres>
+              <GenresList>
+                {genres.length !== 0
+                  ? `${genres.map(genre => genre.name).join(', ')}.`
+                  : 'No genres'}
+              </GenresList>
+            </InfoContainer>
+          </Container>
+          <MoreInfoContainer>
+            {' '}
+            <InfoTitle>Aditional information</InfoTitle>
+            <InfoList>
+              <InfoItem>
+                <InfoLink to={'cast'}>Cast</InfoLink>
+              </InfoItem>
+              <InfoItem>
+                <InfoLink to={'reviews'}>Reviews</InfoLink>
+              </InfoItem>
+            </InfoList>
+          </MoreInfoContainer>
+        </div>
       )}
-      {title && (
-        <MoreInfoContainer>
-          {' '}
-          <InfoTitle>Aditional information</InfoTitle>
-          <InfoList>
-            <InfoItem>
-              <InfoLink to={'cast'}>Cast</InfoLink>
-            </InfoItem>
-            <InfoItem>
-              <InfoLink to={'reviews'}>Reviews</InfoLink>
-            </InfoItem>
-          </InfoList>
-        </MoreInfoContainer>
-      )}
+
       <Suspense fallback={<PageLoading />}>
         <Outlet />
       </Suspense>

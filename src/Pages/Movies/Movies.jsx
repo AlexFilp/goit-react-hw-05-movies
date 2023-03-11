@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { FilmService } from '../../FilmService';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Main, List } from './Movies.styled';
+import { PageLoading } from 'components/PageLoading/PageLoading';
 
 const filmServise = new FilmService();
 
 const Movies = () => {
   const location = useLocation();
-
+  const [loading, setLoading] = useState(false);
   const [films, setFilms] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -25,11 +26,14 @@ const Movies = () => {
       return;
     }
     setFilms([]);
+    setLoading(true);
     filmServise.fetchFilmsOnSearch('search', movieName).then(data => {
       console.log(data);
       if (data.results.length === 0) {
         alert('There is no such films!');
       }
+      console.log(data);
+      setLoading(false);
       loadFilms(data);
     });
   }, [movieName]);
@@ -41,6 +45,7 @@ const Movies = () => {
   return (
     <Main>
       <SearchBar onSubmit={onSubmit} />
+      {loading && <PageLoading />}
       <List>
         {films.map(({ id, title }) => {
           return (

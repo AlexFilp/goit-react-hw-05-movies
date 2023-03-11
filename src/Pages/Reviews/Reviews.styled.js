@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
-
 export const Text = styled.p`
   margin-top: 15px;
   text-align: center;
