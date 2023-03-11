@@ -1,7 +1,8 @@
 import { FilmReviewsListItem } from 'components/FilmReviewsListItem/FilmReviewsListItem';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FilmService } from '../FilmService';
+import { FilmService } from '../../FilmService';
+import { Text, ReviewsList, Container } from './Reviews.styled';
 const filmservice = new FilmService();
 
 export const Reviews = () => {
@@ -20,18 +21,18 @@ export const Reviews = () => {
   };
 
   return (
-    <>
+    <Container>
       {reviews.length === 0 ? (
-        <p>We dont have any review for this movie</p>
+        <Text>We dont have any review for this movie.</Text>
       ) : (
-        <ul>
+        <ReviewsList>
           {reviews.map(({ author, content, id }) => {
             return (
               <FilmReviewsListItem key={id} author={author} content={content} />
             );
           })}
-        </ul>
+        </ReviewsList>
       )}
-    </>
+    </Container>
   );
 };

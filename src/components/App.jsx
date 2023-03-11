@@ -1,9 +1,9 @@
 import { Home } from '../Pages/Home/Home';
-import { MovieDetails } from '../Pages/MovieDetails';
+import { MovieDetails } from '../Pages/MovieDetails/MovieDetails';
 import { Movies } from '../Pages/Movies/Movies';
 import { Route, Routes } from 'react-router-dom';
-import { Cast } from 'Pages/Cast';
-import { Reviews } from 'Pages/Reviews';
+import { Cast } from 'Pages/Cast/Cast';
+import { Reviews } from 'Pages/Reviews/Reviews';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { GlobalStyle } from './GlobalStyle';
 

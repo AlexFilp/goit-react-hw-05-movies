@@ -1,7 +1,8 @@
 import { FilmActorslistItem } from 'components/FilmActorsListItem/FilmActorsListItem';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FilmService } from '../FilmService';
+import { FilmService } from '../../FilmService';
+import { Text, ActorsList } from './Cast.styled';
 const filmservice = new FilmService();
 
 export const Cast = () => {
@@ -22,9 +23,9 @@ export const Cast = () => {
   return (
     <>
       {actors.length === 0 ? (
-        <p>Cant find the actors for this movie. Sorry.</p>
+        <Text>Cant find the actors for this movie. Sorry.</Text>
       ) : (
-        <ul>
+        <ActorsList>
           {actors.map(({ cast_id, character, name, profile_path }) => {
             return (
               <FilmActorslistItem
@@ -35,7 +36,7 @@ export const Cast = () => {
               />
             );
           })}
-        </ul>
+        </ActorsList>
       )}
     </>
   );

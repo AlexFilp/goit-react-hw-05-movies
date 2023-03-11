@@ -1,8 +1,15 @@
+import {
+  Item,
+  Comment,
+  Line,
+} from 'components/FilmReviewsListItem/FilmReviewsListItem.styled';
+
 export const FilmReviewsListItem = ({ author, content }) => {
   return (
-    <li>
+    <Item>
       <h3>Author: {author}</h3>
-      <p>{content}</p>
-    </li>
+      <Comment>{content}</Comment>
+      <Line></Line>
+    </Item>
   );
 };
