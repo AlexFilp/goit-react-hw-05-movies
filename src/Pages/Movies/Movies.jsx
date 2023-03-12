@@ -5,10 +5,11 @@ import { FilmService } from '../../FilmService';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Main, List } from './Movies.styled';
 import { PageLoading } from 'components/PageLoading/PageLoading';
+import { toast } from 'react-toastify';
 
 const filmServise = new FilmService();
 
-const Movies = () => {
+const Movies = ({ onClick }) => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [films, setFilms] = useState([]);
@@ -30,7 +31,8 @@ const Movies = () => {
     filmServise.fetchFilmsOnSearch('search', movieName).then(data => {
       console.log(data);
       if (data.results.length === 0) {
-        alert('There is no such films!');
+        setLoading(false);
+        return toast.error('There is no such films!');
       }
       console.log(data);
       setLoading(false);
@@ -53,6 +55,7 @@ const Movies = () => {
               key={id}
               id={id}
               title={title}
+              onClick={onClick}
               state={{ from: location }}
             />
           );

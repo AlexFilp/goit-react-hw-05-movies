@@ -7,7 +7,7 @@ import { List, Main, Title } from './Home.styled';
 
 const filmServise = new FilmService();
 
-const Home = () => {
+const Home = ({ onClick }) => {
   const [films, setFilms] = useState([]);
   const location = useLocation();
   const [loading, setLoading] = useState(true);
@@ -38,6 +38,7 @@ const Home = () => {
               key={id}
               id={id}
               title={title}
+              onClick={onClick}
               state={{ from: location }}
             />
           );

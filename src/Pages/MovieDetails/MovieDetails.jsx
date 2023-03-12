@@ -26,7 +26,7 @@ import { PageLoading } from 'components/PageLoading/PageLoading';
 
 const filmservice = new FilmService();
 
-const MovieDetails = () => {
+const MovieDetails = ({ backLocation }) => {
   const [film, setFilm] = useState({});
   const [loading, setLoading] = useState(true);
   const { movieId } = useParams();
@@ -94,10 +94,14 @@ const MovieDetails = () => {
             <InfoTitle>Aditional information</InfoTitle>
             <InfoList>
               <InfoItem>
-                <InfoLink to={'cast'}>Cast</InfoLink>
+                <InfoLink to={'cast'} state={backLocation}>
+                  Cast
+                </InfoLink>
               </InfoItem>
               <InfoItem>
-                <InfoLink to={'reviews'}>Reviews</InfoLink>
+                <InfoLink to={'reviews'} state={backLocation}>
+                  Reviews
+                </InfoLink>
               </InfoItem>
             </InfoList>
           </MoreInfoContainer>
