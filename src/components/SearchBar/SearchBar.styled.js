@@ -17,7 +17,7 @@ export const Input = styled.input`
   border-color: black;
 
   &:focus-within {
-    border-color: red;
+    border-color: ${pr => pr.theme.color.accentColor};
   }
 `;
 
@@ -29,14 +29,13 @@ export const Btn = styled.button`
   width: 70px;
   font-size: 18px;
   font-weight: 500;
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
-    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
-    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-  transition: color 200ms ease-in, transform 200ms ease-in;
+  box-shadow: ${pr => pr.theme.boxShadow};
+  transition: color ${pr => pr.theme.transition},
+    transform ${pr => pr.theme.transition};
 
   &:hover,
   &:focus {
-    color: red;
+    color: ${pr => pr.theme.color.accentColor};
     transform: scale(1.1);
   }
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 export const Main = styled.main`
   padding-top: 25px;
@@ -15,10 +15,9 @@ export const GoBackBtn = styled(Link)`
   width: 150px;
   height: 35px;
   border-radius: 4px;
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
-    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
-    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-  transition: color 200ms ease-in, transform 200ms ease-in;
+  box-shadow: ${pr => pr.theme.boxShadow};
+  transition: color ${pr => pr.theme.transition},
+    transform ${pr => pr.theme.transition};
 
   & > svg {
     width: 25px;
@@ -27,7 +26,7 @@ export const GoBackBtn = styled(Link)`
 
   &:hover,
   &:focus {
-    color: red;
+    color: ${pr => pr.theme.color.accentColor};
     transform: scale(1.1);
   }
 `;
@@ -37,10 +36,9 @@ export const Container = styled.div`
   display: flex;
   gap: 15px;
   justify-content: center;
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
-    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
-    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-  transition: color 200ms ease-in, transform 200ms ease-in;
+  box-shadow: ${pr => pr.theme.boxShadow};
+  transition: color ${pr => pr.theme.transition},
+    transform ${pr => pr.theme.transition};
   padding-top: 10px;
   padding-bottom: 10px;
 `;
@@ -114,15 +112,15 @@ export const InfoList = styled.ul`
 
 export const InfoItem = styled.li``;
 
-export const InfoLink = styled(Link)`
+export const InfoLink = styled(NavLink)`
   font-size: 20px;
   font-weight: 500;
 
-  transition: color 200ms ease-in;
+  transition: color ${pr => pr.theme.transition};
 
   &:hover,
   &:focus,
-  &:active {
-    color: red;
+  &.active {
+    color: ${pr => pr.theme.color.accentColor};
   }
 `;

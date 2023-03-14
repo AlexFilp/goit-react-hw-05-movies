@@ -15,12 +15,12 @@ export const Nav = styled.nav`
 export const NaviLink = styled(NavLink)`
   font-size: 25px;
   font-weight: 500;
-  transition: color 200ms ease-in;
+  transition: color ${pr => pr.theme.transition};
 
   &:hover,
   &:focus,
   &.active {
-    color: red;
+    color: ${pr => pr.theme.color.accentColor};
   }
 
   &:not(:last-child) {
