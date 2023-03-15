@@ -94,12 +94,12 @@ const MovieDetails = ({ backLocation }) => {
             <InfoTitle>Aditional information</InfoTitle>
             <InfoList>
               <InfoItem>
-                <InfoLink to={'cast'} state={backLocation}>
+                <InfoLink to={'cast'} state={{ from: backLinkHref }}>
                   Cast
                 </InfoLink>
               </InfoItem>
               <InfoItem>
-                <InfoLink to={'reviews'} state={backLocation}>
+                <InfoLink to={'reviews'} state={{ from: backLinkHref }}>
                   Reviews
                 </InfoLink>
               </InfoItem>
