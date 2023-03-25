@@ -1,77 +1,37 @@
-export class FilmService {
-  #BASE_URL = 'https://api.themoviedb.org/3/';
+import axios from 'axios';
 
-  #API_KEY = '5f00324c3530ad02b76dbaa7a82cb337';
+const API_KEY = '5f00324c3530ad02b76dbaa7a82cb337';
 
-  #typeRequest = {
-    trends: 'trending/movie/week',
-    search: 'search/movie',
-    movieId: 'movie/',
-    genres: 'genre/movie/list',
-  };
+const BASE_URL = 'https://api.themoviedb.org/3/';
 
-  #filmInfo = {
-    credits: '/credits',
-    reviews: '/reviews',
-  };
+axios.defaults.baseURL = BASE_URL;
 
-  getUrl(type) {
-    return `${this.#BASE_URL}${this.#typeRequest[type]}?api_key=${
-      this.#API_KEY
-    }`;
-  }
+export async function fetchTrendMovies() {
+  const response = await axios.get(`/trending/movie/week?api_key=${API_KEY}`);
+  return response.data.results;
+}
 
-  getUrlSearch(type, query) {
-    return `${this.#BASE_URL}${this.#typeRequest[type]}?api_key=${
-      this.#API_KEY
-    }&query=${query}`;
-  }
+export async function fetchOnSearch(query) {
+  const response = await axios.get(
+    `search/movie?api_key=${API_KEY}&query=${query}`
+  );
+  return response.data.results;
+}
 
-  getUrlById(type, id) {
-    return `${this.#BASE_URL}${this.#typeRequest[type]}${id}?api_key=${
-      this.#API_KEY
-    }`;
-  }
+export async function fetchFilmDetails(filmId) {
+  const response = await axios.get(`movie/${filmId}?api_key=${API_KEY}`);
+  return response.data;
+}
 
-  getUrlForInfo(type, id, info) {
-    return `${this.#BASE_URL}${this.#typeRequest[type]}${id}${
-      this.#filmInfo[info]
-    }?api_key=${this.#API_KEY}`;
-  }
-
-  fetchFilmsOrGenres(type) {
-    try {
-      return fetch(this.getUrl(type)).then(response => response.json());
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  fetchFilmsOnSearch(type, query) {
-    try {
-      return fetch(this.getUrlSearch(type, query)).then(response =>
-        response.json()
-      );
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  fetchFilmById(type, id) {
-    try {
-      return fetch(this.getUrlById(type, id)).then(response => response.json());
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  fetchFilmInfo(type, id, info) {
-    try {
-      return fetch(this.getUrlForInfo(type, id, info)).then(response =>
-        response.json()
-      );
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+export async function fetchFilmCast(filmId) {
+  const response = await axios.get(
+    `movie/${filmId}/credits?api_key=${API_KEY}`
+  );
+  return response.data.cast;
+}
+export async function fetchFilmReviews(filmId) {
+  const response = await axios.get(
+    `movie/${filmId}/reviews?api_key=${API_KEY}`
+  );
+  return response.data.results;
 }

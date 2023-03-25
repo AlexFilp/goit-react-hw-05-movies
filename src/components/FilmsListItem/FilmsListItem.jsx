@@ -1,13 +1,9 @@
 import { Item, MovieLink } from './FilmListItem.styled';
 
-export const FilmsListItem = ({ id, title, state, onClick }) => {
-  const handleClick = () => {
-    onClick(state);
-  };
-
+export const FilmsListItem = ({ id, title, state }) => {
   return (
     <Item>
-      <MovieLink to={`/movies/${id}`} state={state} onClick={handleClick}>
+      <MovieLink to={`/movies/${id}`} state={state}>
         {title}
       </MovieLink>
     </Item>

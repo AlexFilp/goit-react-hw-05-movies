@@ -2,9 +2,8 @@ import { FilmReviewsListItem } from 'components/FilmReviewsListItem/FilmReviewsL
 import { PageLoading } from 'components/PageLoading/PageLoading';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FilmService } from '../../FilmService';
+import { fetchFilmReviews } from '../../FilmService';
 import { Text, ReviewsList } from './Reviews.styled';
-const filmservice = new FilmService();
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -12,16 +11,12 @@ const Reviews = () => {
   const [loading, SetLoading] = useState(true);
 
   useEffect(() => {
-    filmservice.fetchFilmInfo('movieId', movieId, 'reviews').then(data => {
+    fetchFilmReviews(movieId).then(data => {
       console.log(data);
+      setReviews(data);
       SetLoading(false);
-      loadFilms(data);
     });
   }, [movieId]);
-
-  const loadFilms = newData => {
-    setReviews(prevState => [...prevState, ...newData.results]);
-  };
 
   return (
     <>

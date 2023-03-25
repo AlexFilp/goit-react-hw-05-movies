@@ -2,30 +2,27 @@ import { FilmsListItem } from 'components/FilmsListItem/FilmsListItem';
 import { PageLoading } from 'components/PageLoading/PageLoading';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { FilmService } from '../../FilmService';
+import { fetchTrendMovies } from '../../FilmService';
 import { List, Main, Title } from './Home.styled';
 
-const filmServise = new FilmService();
-
-const Home = ({ onClick }) => {
+const Home = () => {
   const [films, setFilms] = useState([]);
   const location = useLocation();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    filmServise
-      .fetchFilmsOrGenres('trends')
+    fetchTrendMovies()
       .then(data => {
         console.log(data);
+        setFilms(data);
         setLoading(false);
-        loadFilms(data);
       })
       .catch(error => console.log(error));
   }, []);
 
-  const loadFilms = newData => {
-    setFilms(prevState => [...prevState, ...newData.results]);
-  };
+  // const loadFilms = newData => {
+  //   setFilms(prevState => [...prevState, ...newData.results]);
+  // };
 
   return (
     <Main>
@@ -38,7 +35,6 @@ const Home = ({ onClick }) => {
               key={id}
               id={id}
               title={title}
-              onClick={onClick}
               state={{ from: location }}
             />
           );

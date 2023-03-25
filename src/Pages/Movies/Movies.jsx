@@ -1,15 +1,13 @@
 import { OnSearchFilmListItem } from 'components/OnSearchFilmList/OnSearchFilmListItem';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { useEffect, useState } from 'react';
-import { FilmService } from '../../FilmService';
+import { fetchOnSearch } from '../../FilmService';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Main, List } from './Movies.styled';
 import { PageLoading } from 'components/PageLoading/PageLoading';
 import { toast } from 'react-toastify';
 
-const filmServise = new FilmService();
-
-const Movies = ({ onClick }) => {
+const Movies = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [films, setFilms] = useState([]);
@@ -28,21 +26,20 @@ const Movies = ({ onClick }) => {
     }
     setFilms([]);
     setLoading(true);
-    filmServise.fetchFilmsOnSearch('search', movieName).then(data => {
+    fetchOnSearch(movieName).then(data => {
       console.log(data);
-      if (data.results.length === 0) {
+      if (data.length === 0) {
         setLoading(false);
         return toast.error('There is no such films!');
       }
-      console.log(data);
+      setFilms(data);
       setLoading(false);
-      loadFilms(data);
     });
   }, [movieName]);
 
-  const loadFilms = newData => {
-    setFilms(prevState => [...prevState, ...newData.results]);
-  };
+  // const loadFilms = newData => {
+  //   setFilms(prevState => [...prevState, ...newData.results]);
+  // };
 
   return (
     <Main>
@@ -55,7 +52,6 @@ const Movies = ({ onClick }) => {
               key={id}
               id={id}
               title={title}
-              onClick={onClick}
               state={{ from: location }}
             />
           );

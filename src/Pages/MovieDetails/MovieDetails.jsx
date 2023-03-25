@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
 import movieImg from '../../image/movie.jpg';
-import { FilmService } from '../../FilmService';
+import { fetchFilmDetails } from '../../FilmService';
 import { BsArrowLeft } from 'react-icons/bs';
 import {
   Container,
@@ -24,9 +24,7 @@ import {
 } from './MovieDetails.styled';
 import { PageLoading } from 'components/PageLoading/PageLoading';
 
-const filmservice = new FilmService();
-
-const MovieDetails = ({ backLocation }) => {
+const MovieDetails = () => {
   const [film, setFilm] = useState({});
   const [loading, setLoading] = useState(true);
   const { movieId } = useParams();
@@ -35,16 +33,20 @@ const MovieDetails = ({ backLocation }) => {
   console.log(location.state?.from);
 
   useEffect(() => {
-    filmservice.fetchFilmById('movieId', movieId).then(film => {
+    fetchFilmDetails(movieId).then(film => {
       console.log(film);
+      setFilm(film);
       setLoading(false);
-      loadFilmInfo(film);
     });
   }, [movieId]);
 
-  const loadFilmInfo = newData => {
-    setFilm(newData);
-  };
+  if (!film) {
+    return;
+  }
+
+  // const loadFilmInfo = newData => {
+  //   setFilm(newData);
+  // };
 
   const { title, release_date, poster_path, vote_average, overview, genres } =
     film;
